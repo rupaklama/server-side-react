@@ -1,27 +1,19 @@
 const path = require('path');
 
-// Webpack allows you to define externals - modules that should not be bundled. When bundling with Webpack for the backend - you usually don't want to bundle its node_modules dependencies. This library creates an externals function that ignores node_modules when bundling in Webpack.
-const webpackNodeExternals = require('webpack-node-externals');
+// note - Client Side bundle with Javascript code so user can interact
 
-// note - Server Side Bundle to generate Raw HTML & for safety if contains secret keys
-
-// note - Webpack config to run Babel & build Bundle with all modules before Node executes any code in index.js
+// note - Webpack config to run Babel & build Bundle with all modules before Node executes any code in client.js
 // This allows us to run JSX on our server, converted to regular js code to be executed by node js
 module.exports = {
-  // telling webpack building a bundle for nodeJS rather than for browser
-  target: 'node',
-
-  // telling webpack the root file of our server application
-  entry: './src/index.js',
+  // telling webpack the root file of our Client side codebase
+  entry: './src/client/client.js',
 
   // telling webpack where to put the output file after generated
   output: {
     filename: 'bundle.js',
-    // build dir is automatically created in our working dir
-    path: path.resolve(__dirname, 'build'),
+    // public dir is automatically created in our working dir which is accessible publicly in the browser
+    path: path.resolve(__dirname, 'public'),
   },
-
-  externals: [webpackNodeExternals()],
 
   // telling webpack to run Babel to compile JSX on every modules
   module: {
