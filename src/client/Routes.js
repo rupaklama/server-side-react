@@ -1,8 +1,9 @@
 // note - Browser Router does not work on Server Side
 import React from 'react';
-import { Route } from 'react-router-dom';
 
 import Home from './components/Home';
+
+import UsersList, { loadData } from './components/UsersList';
 
 // Note- StaticRouter is included with React Router library for use with Server Side rendering.
 // So, when we do the initial rendering of the our app, it is going to be using StaticRouter.
@@ -18,12 +19,17 @@ import Home from './components/Home';
 
 // 3. In the Server, using StaticRouter. On the Client, using BrowserRouter.
 
-// Route Mapping function
-export default () => {
-  return (
-    <div>
-      <Route exact path="/" component={Home} />
-      <Route exact path="/hi" component={() => 'hi'} />
-    </div>
-  );
-};
+// Route Mapping function - different setup require by React Router Config Library
+export default [
+  // array of objects for each route
+  {
+    path: '/',
+    component: Home,
+    exact: true,
+  },
+  {
+    loadData: loadData,
+    path: '/users',
+    component: UsersList,
+  },
+];
